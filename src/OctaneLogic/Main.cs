@@ -2,15 +2,15 @@ using Core.Logging;
 using OctaneLogic.Core.Persistence;
 using ShapezShifter.Flow;
 
-namespace OctaneLogic;
-
-/// <summary>
-/// Shapez 2 mod entry point. Physical building registration is intentionally kept separate from this save contract.
-/// </summary>
-public sealed class Main : IMod
+namespace OctaneLogic
 {
-    private readonly ILogger _logger;
-    private bool _disposed;
+    /// <summary>
+    /// Shapez 2 mod entry point. Physical building registration is intentionally kept separate from this save contract.
+    /// </summary>
+    public sealed class Main : IMod
+    {
+        private readonly ILogger _logger;
+        private bool _disposed;
 
     public Main(ILogger logger)
     {
@@ -29,9 +29,10 @@ public sealed class Main : IMod
         this.DetachSaveData<OctaneLogicSaveData>();
     }
 
-    private void OnSaveDataLoaded(OctaneLogicSaveData saveData)
-    {
-        saveData.Normalize();
-        _logger.Info?.Log($"Octane Logic loaded {saveData.Nodes.Count} persisted logic node(s), schema {saveData.SchemaVersion}.");
+        private void OnSaveDataLoaded(OctaneLogicSaveData saveData)
+        {
+            saveData.Normalize();
+            _logger.Info?.Log($"Octane Logic loaded {saveData.Nodes.Count} persisted logic node(s), schema {saveData.SchemaVersion}.");
+        }
     }
 }
