@@ -44,3 +44,16 @@ The output is written to `$(SPZ2_PERSISTENT)/mods/OctaneLogic`.
 3. **Physical gates** — add Memory Latch and Advanced Clock buildings with static assets, prediction and simulation.
 4. **Safety UX** — backup/export command, mod-off warning and compatibility diagnostics.
 
+
+## Rider / Visual Studio setup
+
+Open **`OctaneLogic.sln`** at the repository root. Do not create or open a separate root `OctaneLogic.csproj`; that project does not contain the required project and Shapez Shifter references.
+
+Before restoring/building, configure these environment variables in your IDE's build/run environment:
+
+- `SPZ2_PATH`: the Shapez 2 managed-assemblies directory (contains `SPZGameAssembly.dll` and `Core.dll`).
+- `SPZ2_SHIFTER`: full path to the Shapez Shifter DLL.
+- `SPZ2_PERSISTENT`: Shapez 2 persistent-data directory, used only for the build output.
+
+The editor will correctly resolve `OctaneLogic.Core` after loading the canonical solution. The `Core` and `ShapezShifter` references remain unresolved until the first two variables point to the local game/mod installations.
+
