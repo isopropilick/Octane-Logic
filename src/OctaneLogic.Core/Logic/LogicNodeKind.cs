@@ -1,11 +1,12 @@
-namespace OctaneLogic.Core.Logic;
-
-public enum LogicNodeKind
+namespace OctaneLogic.Core.Logic
 {
-    MemoryLatch,
-    Clock,
-    RisingEdge,
-    Pulse,
-    DelayedPulse,
-    Toggle
+    public enum LogicNodeKind
+    {
+        MemoryLatch,
+        Clock,
+        RisingEdge,
+        Pulse,
+        DelayedPulse,
+        Toggle
+    }
 }
