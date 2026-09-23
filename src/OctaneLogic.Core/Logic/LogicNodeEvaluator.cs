@@ -1,12 +1,12 @@
 using System;
 
-namespace OctaneLogic.Core.Logic;
-
-/// <summary>
-/// Deterministic evaluator. Call once per simulation tick for each node.
-/// </summary>
-public static class LogicNodeEvaluator
+namespace OctaneLogic.Core.Logic
 {
+    /// <summary>
+    /// Deterministic evaluator. Call once per simulation tick for each node.
+    /// </summary>
+    public static class LogicNodeEvaluator
+    {
     public static bool Evaluate(LogicNodeState node, LogicInputs input, long simulationTick)
     {
         if (node == null) throw new ArgumentNullException(nameof(node));
@@ -103,5 +103,6 @@ public static class LogicNodeEvaluator
     {
         long result = value % divisor;
         return result < 0 ? result + divisor : result;
+    }
     }
 }
