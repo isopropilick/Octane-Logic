@@ -17,24 +17,24 @@ namespace OctaneLogic.Core.Persistence
 
         public void Normalize()
         {
-        if (SchemaVersion <= 0) SchemaVersion = CurrentSchemaVersion;
-        Nodes ??= new List<LogicNodeState>();
+            if (SchemaVersion <= 0) SchemaVersion = CurrentSchemaVersion;
+            Nodes ??= new List<LogicNodeState>();
 
-        foreach (LogicNodeState node in Nodes.Where(node => node != null))
-        {
-            node.Normalize();
-        }
-
-        // Preserve the first stable ID and only repair duplicates. Never discard saved nodes.
-        var usedIds = new HashSet<string>(StringComparer.Ordinal);
-        foreach (LogicNodeState node in Nodes.Where(node => node != null))
-        {
-            if (!usedIds.Add(node.NodeId))
+            foreach (LogicNodeState node in Nodes.Where(node => node != null))
             {
-                node.NodeId = Guid.NewGuid().ToString("N");
-                usedIds.Add(node.NodeId);
+                node.Normalize();
             }
-        }
+
+            // Preserve the first stable ID and only repair duplicates. Never discard saved nodes.
+            var usedIds = new HashSet<string>(StringComparer.Ordinal);
+            foreach (LogicNodeState node in Nodes.Where(node => node != null))
+            {
+                if (!usedIds.Add(node.NodeId))
+                {
+                    node.NodeId = Guid.NewGuid().ToString("N");
+                    usedIds.Add(node.NodeId);
+                }
+            }
         }
     }
 }
