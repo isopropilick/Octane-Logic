@@ -7,22 +7,22 @@ namespace OctaneLogic.Core.Logic
     /// </summary>
     public static class LogicNodeEvaluator
     {
-    public static bool Evaluate(LogicNodeState node, LogicInputs input, long simulationTick)
-    {
-        if (node == null) throw new ArgumentNullException(nameof(node));
-        node.Normalize();
-
-        return node.Kind switch
+        public static bool Evaluate(LogicNodeState node, LogicInputs input, long simulationTick)
         {
-            LogicNodeKind.MemoryLatch => EvaluateMemoryLatch(node, input),
-            LogicNodeKind.Clock => EvaluateClock(node, simulationTick),
-            LogicNodeKind.RisingEdge => EvaluateRisingEdge(node, input),
-            LogicNodeKind.Pulse => EvaluatePulse(node, input),
-            LogicNodeKind.DelayedPulse => EvaluateDelayedPulse(node, input),
-            LogicNodeKind.Toggle => EvaluateToggle(node, input),
-            _ => false
-        };
-    }
+            if (node == null) throw new ArgumentNullException(nameof(node));
+            node.Normalize();
+
+            return node.Kind switch
+            {
+                LogicNodeKind.MemoryLatch => EvaluateMemoryLatch(node, input),
+                LogicNodeKind.Clock => EvaluateClock(node, simulationTick),
+                LogicNodeKind.RisingEdge => EvaluateRisingEdge(node, input),
+                LogicNodeKind.Pulse => EvaluatePulse(node, input),
+                LogicNodeKind.DelayedPulse => EvaluateDelayedPulse(node, input),
+                LogicNodeKind.Toggle => EvaluateToggle(node, input),
+                _ => false
+            };
+        }
 
     private static bool EvaluateMemoryLatch(LogicNodeState node, LogicInputs input)
     {
