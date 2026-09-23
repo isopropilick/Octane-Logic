@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using OctaneLogic.Core.Logic;
 
-namespace OctaneLogic.Core.Persistence;
-
-/// <summary>
-/// Mod-owned save blob. Keep this independent of Shapez 2 map entities and runtime objects.
-/// </summary>
-public sealed class OctaneLogicSaveData
+namespace OctaneLogic.Core.Persistence
 {
-    public const int CurrentSchemaVersion = 1;
-
-    public int SchemaVersion { get; set; } = CurrentSchemaVersion;
-    public List<LogicNodeState> Nodes { get; set; } = new List<LogicNodeState>();
-
-    public void Normalize()
+    /// <summary>
+    /// Mod-owned save blob. Keep this independent of Shapez 2 map entities and runtime objects.
+    /// </summary>
+    public sealed class OctaneLogicSaveData
     {
+        public const int CurrentSchemaVersion = 1;
+
+        public int SchemaVersion { get; set; } = CurrentSchemaVersion;
+        public List<LogicNodeState> Nodes { get; set; } = new List<LogicNodeState>();
+
+        public void Normalize()
+        {
         if (SchemaVersion <= 0) SchemaVersion = CurrentSchemaVersion;
         Nodes ??= new List<LogicNodeState>();
 
@@ -34,6 +34,7 @@ public sealed class OctaneLogicSaveData
                 node.NodeId = Guid.NewGuid().ToString("N");
                 usedIds.Add(node.NodeId);
             }
+        }
         }
     }
 }
