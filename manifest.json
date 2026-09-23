@@ -1,0 +1,22 @@
+{
+  "Name": "isopropilick.OctaneLogic",
+  "Version": "0.1.0",
+  "Title": "Octane Logic",
+  "Description": "Stateful and timing-oriented logic extensions for shapez 2.",
+  "Author": "Octane Wolf",
+  "SavedModVersionCompabilityRangeWithSelf": ">=0.1.0 <1.0.0",
+  "GameVersionSupportRange": "*",
+  "AffectsSaveGames": true,
+  "DisablesAchievements": true,
+  "Conflicts": [],
+  "Assemblies": [
+    "OctaneLogic.dll"
+  ],
+  "Dependencies": [
+    {
+      "ModId": "steam:3542611357",
+      "ModTitle": "Shapez Shifter",
+      "Version": "^1.2.0"
+    }
+  ]
+}
