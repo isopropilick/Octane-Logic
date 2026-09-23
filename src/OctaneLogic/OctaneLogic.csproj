@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>9.0</LangVersion>
+    <OutputPath>$(SPZ2_PERSISTENT)/mods/OctaneLogic</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../OctaneLogic.Core/OctaneLogic.Core.csproj" />
+    <Reference Include="ShapezShifter">
+      <HintPath>$(SPZ2_SHIFTER)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SPZGameAssembly">
+      <HintPath>$(SPZ2_PATH)/SPZGameAssembly.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Core">
+      <HintPath>$(SPZ2_PATH)/Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../manifest.json" Link="manifest.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
