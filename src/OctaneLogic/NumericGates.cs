@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Core.Factory;
 using Core.Localization;
@@ -121,7 +120,7 @@ namespace OctaneLogic
 
         public IFactory<LogicGate2In1OutSimulationState, NumericGateSimulation> BuildFactory(
             SimulationSystemsDependencies dependencies,
-            [UnscopedRef] out EmptyCustomSimulationConfiguration configuration)
+            out EmptyCustomSimulationConfiguration configuration)
         {
             configuration = new EmptyCustomSimulationConfiguration();
             return new NumericGateSimulationFactory(_operation);
@@ -153,7 +152,7 @@ namespace OctaneLogic
             _operation = operation;
         }
 
-        protected override ISignal ComputeOutputSignal(ISignal left, ISignal right)
+        public override ISignal ComputeOutputSignal(ISignal left, ISignal right)
         {
             if (!(left is IntegerSignal leftInteger) || !(right is IntegerSignal rightInteger))
             {
@@ -189,7 +188,7 @@ namespace OctaneLogic
 
     internal sealed class NumericGateModuleDataProvider : SimulationBasedBuildingModuleDataProvider<NumericGateSimulation>
     {
-        protected override IEnumerable<IHUDSidePanelModuleData> GetSimulationModules(
+        public override IEnumerable<IHUDSidePanelModuleData> GetSimulationModules(
             BuildingModel building,
             ILocalizedSimulation localizedSimulation,
             NumericGateSimulation simulation)
