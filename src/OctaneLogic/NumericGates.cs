@@ -13,6 +13,7 @@ using ShapezShifter.Flow.Atomic;
 using ShapezShifter.Flow.Research;
 using ShapezShifter.Flow.Toolbar;
 using ShapezShifter.Hijack;
+using ShapezShifter.Kit;
 using UnityEngine;
 using ILogger = Core.Logging.ILogger;
 
