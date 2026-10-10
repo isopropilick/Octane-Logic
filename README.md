@@ -20,6 +20,15 @@ Results clamp to the supported 32-bit integer range. Unsupported signal types em
 These deliberately complement the vanilla boolean gates rather than duplicate AND, OR, NOT,
 XOR or equality.
 
+### Custom gate art
+
+Drop a single-mesh FBX into `Resources/Models/<gate>/LOD0.fbx` (`adder`, `subtractor`,
+`multiplier`, `divider`, or `modulo`), build, and restart the game. Optional `LOD1.fbx`
+through `LOD5.fbx` and `Resources/Icons/<gate>.png` are supported. Missing or invalid art
+uses the generated placeholders. Models require two UV maps for the game's building materials.
+See [Custom gate models](docs/custom-models.md) for the complete Blender/export workflow,
+asset paths, LOD mapping and diagnostics.
+
 ### Deterministic core
 
 The engine already models and persists these node behaviours:

@@ -120,5 +120,7 @@
   <ItemGroup>
     <None Include="../../manifest.json" Link="manifest.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../../translations.json" Link="translations.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../Resources/Models/**/*.fbx" Link="Resources/Models/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="../../Resources/Icons/**/*.png" Link="Resources/Icons/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

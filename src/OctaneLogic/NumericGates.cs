@@ -27,15 +27,15 @@ namespace OctaneLogic
     {
         private readonly NumericGateBuilding[] _buildings;
 
-        public NumericGates(ILogger logger)
+        public NumericGates(ILogger logger, GateVisualAssets assets)
         {
             _buildings = new[]
             {
-                new NumericGateBuilding(logger, NumericGateOperation.Add, "adder", new Color(0.18f, 0.72f, 0.94f)),
-                new NumericGateBuilding(logger, NumericGateOperation.Subtract, "subtractor", new Color(0.38f, 0.82f, 0.48f)),
-                new NumericGateBuilding(logger, NumericGateOperation.Multiply, "multiplier", new Color(0.96f, 0.62f, 0.18f)),
-                new NumericGateBuilding(logger, NumericGateOperation.Divide, "divider", new Color(0.82f, 0.38f, 0.96f)),
-                new NumericGateBuilding(logger, NumericGateOperation.Modulo, "modulo", new Color(0.96f, 0.32f, 0.42f))
+                new NumericGateBuilding(logger, assets, NumericGateOperation.Add, "adder", new Color(0.18f, 0.72f, 0.94f)),
+                new NumericGateBuilding(logger, assets, NumericGateOperation.Subtract, "subtractor", new Color(0.38f, 0.82f, 0.48f)),
+                new NumericGateBuilding(logger, assets, NumericGateOperation.Multiply, "multiplier", new Color(0.96f, 0.62f, 0.18f)),
+                new NumericGateBuilding(logger, assets, NumericGateOperation.Divide, "divider", new Color(0.82f, 0.38f, 0.96f)),
+                new NumericGateBuilding(logger, assets, NumericGateOperation.Modulo, "modulo", new Color(0.96f, 0.32f, 0.42f))
             };
         }
 
@@ -51,7 +51,7 @@ namespace OctaneLogic
         private readonly NumericGateOperation _operation;
         private readonly ILogger _logger;
 
-        public NumericGateBuilding(ILogger logger, NumericGateOperation operation, string id, Color color)
+        public NumericGateBuilding(ILogger logger, GateVisualAssets assets, NumericGateOperation operation, string id, Color color)
         {
             _logger = logger;
             _operation = operation;
@@ -60,7 +60,7 @@ namespace OctaneLogic
             IBuildingGroupBuilder group = BuildingGroup.Create(new BuildingDefinitionGroupId("octane-logic-" + id + "-group"))
                 .WithTitle(("octane-logic." + id + ".title").T())
                 .WithDescription(("octane-logic." + id + ".description").T())
-                .WithIcon(NumericGateVisuals.CreateIcon(color))
+                .WithIcon(assets.LoadIcon(id, color))
                 .AsNonTransportableBuilding()
                 .WithPreferredPlacement(DefaultPreferredPlacementMode.Single)
                 .AutoConnected();
@@ -75,7 +75,7 @@ namespace OctaneLogic
             IBuildingBuilder building = Building.Create(_definitionId)
                 .WithConnectorData(connectors)
                 .DynamicallyRendering<NumericGateSimulationRenderer, NumericGateSimulation, NumericGateDrawData>(drawData)
-                .WithStaticDrawData(NumericGateVisuals.CreateDrawData(id, color, drawData))
+                .WithStaticDrawData(NumericGateVisuals.CreateDrawData(assets, id, color, drawData))
                 .WithoutSound()
                 .WithoutSimulationConfiguration()
                 .WithEfficiencyData(new BuildingEfficiencyData(1.0f, 1));
@@ -210,18 +210,9 @@ namespace OctaneLogic
 
     internal static class NumericGateVisuals
     {
-        public static Sprite CreateIcon(Color color)
+        public static BuildingDrawData CreateDrawData(GateVisualAssets assets, string id, Color color, NumericGateDrawData drawData)
         {
-            var texture = new Texture2D(2, 2);
-            texture.SetPixels(new[] { color, color, color, color });
-            texture.Apply();
-            return Sprite.Create(texture, new Rect(0, 0, 2, 2), new Vector2(0.5f, 0.5f));
-        }
-
-        public static BuildingDrawData CreateDrawData(string id, Color color, NumericGateDrawData drawData)
-        {
-            Mesh mesh = CreateBoxMesh("OctaneLogic_" + id, color);
-            LOD6Mesh lod = MeshLod.Create().AddLod0Mesh(mesh).BuildLod6Mesh();
+            LOD6Mesh lod = assets.LoadModel(id, () => CreateBoxMesh("OctaneLogic_" + id, color), out Mesh mesh);
 
             return new BuildingDrawData(
                 renderVoidBelow: false,

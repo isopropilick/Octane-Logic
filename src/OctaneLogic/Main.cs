@@ -18,6 +18,7 @@ namespace OctaneLogic
         private readonly ILogger _logger;
         private readonly Hook _simulationSystemsHook;
         private readonly NumericGates _numericGates;
+        private readonly GateVisualAssets _visualAssets;
         private bool _disposed;
 
         public Main(ILogger logger)
@@ -26,7 +27,8 @@ namespace OctaneLogic
             this.AttachSaveData<OctaneLogicSaveData>();
             this.RegisterToAfterSaveDataDeserialized<OctaneLogicSaveData>(OnSaveDataLoaded);
 
-            _numericGates = new NumericGates(logger);
+            _visualAssets = new GateVisualAssets(logger);
+            _numericGates = new NumericGates(logger, _visualAssets);
             _simulationSystemsHook = DetourHelper
                 .CreatePostfixHook<BuiltinSimulationSystems, IEnumerable<ISimulationSystem>>(
                     systems => systems.CreateSimulationSystems(),
@@ -43,6 +45,7 @@ namespace OctaneLogic
             _simulationSystemsHook.Dispose();
             this.UnregisterToAfterSaveDataDeserialized<OctaneLogicSaveData>(OnSaveDataLoaded);
             this.DetachSaveData<OctaneLogicSaveData>();
+            _visualAssets.Dispose();
         }
 
         private IEnumerable<ISimulationSystem> AddSimulationSystems(
