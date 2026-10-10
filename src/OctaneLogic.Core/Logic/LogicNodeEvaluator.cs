@@ -14,9 +14,18 @@ namespace OctaneLogic.Core.Logic
 
             return node.Kind switch
             {
+                LogicNodeKind.Buffer => input.InputA,
+                LogicNodeKind.Not => !input.InputA,
+                LogicNodeKind.And => input.InputA && input.InputB,
+                LogicNodeKind.Or => input.InputA || input.InputB,
+                LogicNodeKind.Xor => input.InputA ^ input.InputB,
+                LogicNodeKind.Nand => !(input.InputA && input.InputB),
+                LogicNodeKind.Nor => !(input.InputA || input.InputB),
+                LogicNodeKind.Xnor => input.InputA == input.InputB,
                 LogicNodeKind.MemoryLatch => EvaluateMemoryLatch(node, input),
                 LogicNodeKind.Clock => EvaluateClock(node, simulationTick),
                 LogicNodeKind.RisingEdge => EvaluateRisingEdge(node, input),
+                LogicNodeKind.FallingEdge => EvaluateFallingEdge(node, input),
                 LogicNodeKind.Pulse => EvaluatePulse(node, input),
                 LogicNodeKind.DelayedPulse => EvaluateDelayedPulse(node, input),
                 LogicNodeKind.Toggle => EvaluateToggle(node, input),
@@ -42,6 +51,13 @@ namespace OctaneLogic.Core.Logic
     private static bool EvaluateRisingEdge(LogicNodeState node, LogicInputs input)
     {
         bool result = input.Data && !node.PreviousInput;
+        node.PreviousInput = input.Data;
+        return result;
+    }
+
+    private static bool EvaluateFallingEdge(LogicNodeState node, LogicInputs input)
+    {
+        bool result = !input.Data && node.PreviousInput;
         node.PreviousInput = input.Data;
         return result;
     }

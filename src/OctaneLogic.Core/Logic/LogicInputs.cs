@@ -17,5 +17,17 @@ namespace OctaneLogic.Core.Logic
         public bool Enable { get; }
         public bool Set { get; }
         public bool Reset { get; }
+
+        /// <summary>Primary input for combinational gates.</summary>
+        public bool InputA => Data;
+
+        /// <summary>Secondary input for combinational gates.</summary>
+        public bool InputB => Enable;
+
+        /// <summary>Creates inputs using gate-oriented names without changing the persisted node contract.</summary>
+        public static LogicInputs ForGate(bool inputA, bool inputB = false)
+        {
+            return new LogicInputs(data: inputA, enable: inputB);
+        }
     }
 }

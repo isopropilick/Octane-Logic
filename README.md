@@ -6,9 +6,10 @@ Octane Logic is a Shapez 2 logic-expansion mod. Its first release establishes a 
 
 The engine already models and persists these node behaviours:
 
+- **Combinational gates** — Buffer, NOT, AND, OR, XOR, NAND, NOR and XNOR. Two-input gates use explicit A/B input aliases.
 - **Memory latch** — set/reset memory, with enable/data support.
 - **Advanced clock** — configurable period, high duration and phase offset; it is driven by simulation ticks rather than real time.
-- **Edge detector** — emits one tick on a rising input.
+- **Edge detectors** — emit one tick on rising or falling input transitions.
 - **Pulse generator** — configurable pulse width on a rising input.
 - **Delayed pulse** — a rising input emits a pulse after a configurable tick delay.
 - **Toggle** — flips its persisted state on each rising input.

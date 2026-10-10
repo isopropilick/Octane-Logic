@@ -9,7 +9,9 @@ static class Program
         try
         {
             ClockIsDeterministic();
+            CombinationalGatesUseNamedInputs();
             LatchAndTogglePersistState();
+            EdgeDetectorsOnlyFireOnTransitions();
             PulsesHaveTheConfiguredWidth();
             DelayedPulseWaitsBeforeEmitting();
             SaveDataRepairsInvalidValuesWithoutDroppingNodes();
@@ -46,6 +48,33 @@ static class Program
         Assert(!LogicNodeEvaluator.Evaluate(toggle, new LogicInputs(true), 3));
     }
 
+    private static void CombinationalGatesUseNamedInputs()
+    {
+        Assert(Evaluate(LogicNodeKind.Buffer, true));
+        Assert(!Evaluate(LogicNodeKind.Not, true));
+        Assert(Evaluate(LogicNodeKind.And, true, true));
+        Assert(!Evaluate(LogicNodeKind.And, true, false));
+        Assert(Evaluate(LogicNodeKind.Or, false, true));
+        Assert(Evaluate(LogicNodeKind.Xor, true, false));
+        Assert(!Evaluate(LogicNodeKind.Xor, true, true));
+        Assert(Evaluate(LogicNodeKind.Nand, false, true));
+        Assert(Evaluate(LogicNodeKind.Nor, false, false));
+        Assert(Evaluate(LogicNodeKind.Xnor, true, true));
+        Assert(!Evaluate(LogicNodeKind.Xnor, true, false));
+    }
+
+    private static void EdgeDetectorsOnlyFireOnTransitions()
+    {
+        var rising = new LogicNodeState { Kind = LogicNodeKind.RisingEdge };
+        Assert(!LogicNodeEvaluator.Evaluate(rising, new LogicInputs(false), 0));
+        Assert(LogicNodeEvaluator.Evaluate(rising, new LogicInputs(true), 1));
+        Assert(!LogicNodeEvaluator.Evaluate(rising, new LogicInputs(true), 2));
+
+        var falling = new LogicNodeState { Kind = LogicNodeKind.FallingEdge, PreviousInput = true };
+        Assert(LogicNodeEvaluator.Evaluate(falling, new LogicInputs(false), 0));
+        Assert(!LogicNodeEvaluator.Evaluate(falling, new LogicInputs(false), 1));
+    }
+
     private static void PulsesHaveTheConfiguredWidth()
     {
         var pulse = new LogicNodeState { Kind = LogicNodeKind.Pulse, PulseWidthTicks = 2 };
@@ -79,5 +108,13 @@ static class Program
     private static void Assert(bool condition)
     {
         if (!condition) throw new InvalidOperationException("Core check failed.");
+    }
+
+    private static bool Evaluate(LogicNodeKind kind, bool inputA, bool inputB = false)
+    {
+        return LogicNodeEvaluator.Evaluate(
+            new LogicNodeState { Kind = kind },
+            LogicInputs.ForGate(inputA, inputB),
+            simulationTick: 0);
     }
 }
