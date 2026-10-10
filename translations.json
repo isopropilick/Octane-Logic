@@ -1,0 +1,14 @@
+{
+  "en-US": {
+    "octane-logic.adder.title": "Adder",
+    "octane-logic.adder.description": "Outputs A + B for two integer signals.",
+    "octane-logic.subtractor.title": "Subtractor",
+    "octane-logic.subtractor.description": "Outputs A - B for two integer signals.",
+    "octane-logic.multiplier.title": "Multiplier",
+    "octane-logic.multiplier.description": "Outputs A × B for two integer signals.",
+    "octane-logic.divider.title": "Divider",
+    "octane-logic.divider.description": "Outputs integer A / B. A zero divisor outputs no signal.",
+    "octane-logic.modulo.title": "Modulo",
+    "octane-logic.modulo.description": "Outputs integer A mod B. A zero divisor outputs no signal."
+  }
+}

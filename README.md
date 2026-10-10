@@ -4,6 +4,24 @@ Octane Logic is a Shapez 2 logic-expansion mod. Its first release establishes a 
 
 ## What is implemented
 
+### Placeable numeric signal buildings
+
+The first physical buildings are available from the Signals toolbar. Each accepts integer
+signals on its west (**A**) and south (**B**) connectors, and writes the result on its east
+connector:
+
+- **Adder** — `A + B`
+- **Subtractor** — `A - B`
+- **Multiplier** — `A × B`
+- **Divider** — integer `A / B`; division by zero emits no signal.
+- **Modulo** — integer `A mod B`; division by zero emits no signal.
+
+Results clamp to the supported 32-bit integer range. Unsupported signal types emit no signal.
+These deliberately complement the vanilla boolean gates rather than duplicate AND, OR, NOT,
+XOR or equality.
+
+### Deterministic core
+
 The engine already models and persists these node behaviours:
 
 - **Memory latch** — set/reset memory, with enable/data support.
@@ -13,7 +31,9 @@ The engine already models and persists these node behaviours:
 - **Delayed pulse** — a rising input emits a pulse after a configurable tick delay.
 - **Toggle** — flips its persisted state on each rising input.
 
-The in-game building, wire-port, renderer and placement integration deliberately comes after the persistence contract. Shapez Shifter supports those pieces, but their concrete wiring types must be verified against the player’s installed Shapez 2 assemblies before binding the API. This keeps the initial implementation honest and prevents a brittle dependency on inferred private game types.
+The first placeable devices follow Shapez Shifter's building, connector and simulation-system
+registration pattern. The stateful/timing devices remain the next milestone because they need
+an explicit persisted building-to-node mapping and a configuration UI.
 
 ## Save-game safety contract
 
@@ -41,7 +61,8 @@ The output is written to `$(SPZ2_PERSISTENT)/mods/OctaneLogic`.
 
 1. **Core and persistence** — current branch.
 2. **API reconnaissance** — identify the supported wire connector, simulation and save compatibility extension points for the currently installed game build.
-3. **Physical gates** — add Memory Latch and Advanced Clock buildings with static assets, prediction and simulation.
+3. **Stateful physical gates** — add Memory Latch and Advanced Clock buildings with persisted
+   configuration, prediction and simulation.
 4. **Safety UX** — backup/export command, mod-off warning and compatibility diagnostics.
 
 
