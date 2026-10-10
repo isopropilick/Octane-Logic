@@ -6,13 +6,16 @@
     <OutputPath>$(SPZ2_PERSISTENT)/mods/OctaneLogic</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="../OctaneLogic.Core/OctaneLogic.Core.csproj" />
     <Reference Include="ShapezShifter">
       <HintPath>$(SPZ2_SHIFTER)</HintPath>
       <Private>False</Private>
     </Reference>
+      <Reference Include="Game.Core.Modding">
+          <HintPath>$(SPZ2_PATH)\Game.Core.Modding.dll</HintPath>
+          <Private>False</Private>
+      </Reference>
     <Reference Include="SPZGameAssembly">
       <HintPath>$(SPZ2_PATH)/SPZGameAssembly.dll</HintPath>
       <Private>False</Private>

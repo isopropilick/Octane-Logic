@@ -6,8 +6,8 @@
   "Author": "Octane Wolf",
   "SavedModVersionCompabilityRangeWithSelf": ">=0.1.0 <1.0.0",
   "GameVersionSupportRange": "*",
-  "AffectsSaveGames": true,
-  "DisablesAchievements": true,
+  "AffectsSaveGames": false,
+  "DisablesAchievements": false,
   "Conflicts": [],
   "Assemblies": [
     "OctaneLogic.dll"
