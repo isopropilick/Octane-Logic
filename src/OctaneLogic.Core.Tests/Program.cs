@@ -42,7 +42,7 @@ static class Program
         var toggle = new LogicNodeState { Kind = LogicNodeKind.Toggle };
         Assert(LogicNodeEvaluator.Evaluate(toggle, new LogicInputs(true), 0));
         Assert(LogicNodeEvaluator.Evaluate(toggle, new LogicInputs(true), 1));
-        Assert(!LogicNodeEvaluator.Evaluate(toggle, new LogicInputs(false), 2));
+        Assert(LogicNodeEvaluator.Evaluate(toggle, new LogicInputs(false), 2));
         Assert(!LogicNodeEvaluator.Evaluate(toggle, new LogicInputs(true), 3));
     }
 

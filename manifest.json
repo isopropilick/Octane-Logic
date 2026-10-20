@@ -1,12 +1,12 @@
 {
   "Name": "isopropilick.OctaneLogic",
-  "Version": "0.1.0",
+  "Version": "0.2.0",
   "Title": "Octane Logic",
-  "Description": "Stateful and timing-oriented logic extensions for shapez 2.",
+  "Description": "Placeable numeric, stateful and timing-oriented logic extensions for shapez 2.",
   "Author": "Octane Wolf",
-  "SavedModVersionCompabilityRangeWithSelf": ">=0.1.0 <1.0.0",
+  "SavedModVersionCompabilityRangeWithSelf": ">=0.2.0 <1.0.0",
   "GameVersionSupportRange": "*",
-  "AffectsSaveGames": false,
+  "AffectsSaveGames": true,
   "DisablesAchievements": false,
   "Conflicts": [],
   "Assemblies": [
